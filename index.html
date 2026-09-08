@@ -103,6 +103,23 @@
     padding-left: 10px; border-left: 1px solid var(--line);
   }
 
+  /* 한/영 전환: 번역 블록은 마크업에 둘 다 심어두고 [hidden]으로 감춘다(JS 없이도
+     한국어 기본값이 그대로 보임). display:contents/grid를 쓰는 요소가 있어 UA 기본
+     [hidden] 규칙이 밀릴 수 있으므로 명시적으로 !important를 준다. */
+  [hidden] { display: none !important; }
+
+  .langsw { display: flex; gap: 4px; margin-left: auto; }
+  .langsw button {
+    font: inherit; font-size: 12.5px; line-height: 1; white-space: nowrap;
+    padding: 6px 12px; border-radius: 999px;
+    border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
+    cursor: pointer;
+  }
+  .langsw button:hover { color: var(--ink); }
+  .langsw button[aria-pressed="true"] {
+    background: var(--coral); border-color: var(--coral); color: #fff;
+  }
+
   /* 앵커 내비. 데스크톱은 한 줄, 좁아지면 가로 스크롤이 아니라 줄바꿈으로
      떨어뜨린다. 스크롤바를 숨긴 가로 스트립은 뒤쪽 항목이 발견되지 않는다. */
   nav.jump {
@@ -220,7 +237,9 @@
 </head>
 <body>
 
-<a class="skip ui" href="#main">본문으로 건너뛰기</a>
+<a class="skip ui" href="#main">
+  <span data-lang="ko">본문으로 건너뛰기</span><span data-lang="en" hidden>Skip to content</span>
+</a>
 
 <div class="topbar">
   <div class="topbar-inner">
@@ -232,177 +251,294 @@
       <span class="brand-name ui">아틀리에316</span>
     </span>
     <nav class="jump ui" aria-label="문서 내 이동">
-      <a href="#about">서비스 소개</a>
-      <a href="#biz">사업자 정보</a>
-      <a href="#terms">이용약관</a>
-      <a href="#privacy">개인정보처리방침</a>
-      <a href="#refund">환불정책</a>
-      <a href="#contact">문의</a>
+      <a href="#about"><span data-lang="ko">서비스 소개</span><span data-lang="en" hidden>About</span></a>
+      <a href="#biz"><span data-lang="ko">사업자 정보</span><span data-lang="en" hidden>Business Info</span></a>
+      <a href="#terms"><span data-lang="ko">이용약관</span><span data-lang="en" hidden>Terms of Service</span></a>
+      <a href="#privacy"><span data-lang="ko">개인정보처리방침</span><span data-lang="en" hidden>Privacy Policy</span></a>
+      <a href="#refund"><span data-lang="ko">환불정책</span><span data-lang="en" hidden>Refund Policy</span></a>
+      <a href="#contact"><span data-lang="ko">문의</span><span data-lang="en" hidden>Contact</span></a>
     </nav>
+    <span class="langsw ui" role="group" aria-label="Language / 언어">
+      <button type="button" data-set-lang="ko" aria-pressed="true">한국어</button>
+      <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+    </span>
   </div>
 </div>
 
 <main id="main">
   <div class="hero">
-    <h1>성경 말씀이 담긴 배경화면을 작가가 만들고, 전 세계 이용자가 씁니다</h1>
-    <p class="lede">
+    <h1 data-lang="ko">성경 말씀이 담긴 배경화면을 작가가 만들고, 전 세계 이용자가 씁니다</h1>
+    <h1 data-lang="en" hidden>Artists craft Bible-verse wallpapers, and people around the world make them their own</h1>
+    <p class="lede" data-lang="ko">
       아틀리에316(threeonesix)은 작가가 성경 구절을 담아 만든 모바일 배경화면을 판매하고,
       구매자가 앱 안에서 바로 홈·잠금 화면에 적용하는 글로벌 마켓플레이스입니다.
       모든 작품은 말씀이 담긴 버전과 배경만 있는 버전, 두 가지로 함께 제공되며
       15개 언어로 서비스합니다.
     </p>
+    <p class="lede" data-lang="en" hidden>
+      Atelier316 (threeonesix) is a global marketplace where artists sell mobile wallpapers
+      featuring Bible verses, and buyers apply them straight to their home and lock screen
+      inside the app. Every piece ships as two versions — with verse text, and background
+      only — and the service is available in 15 languages.
+    </p>
   </div>
 
   <section id="about">
-    <h2>서비스 소개</h2>
-    <p>이용자는 앱에서 작품을 둘러보고 구매한 뒤, 앱 안의 적용 기능으로 기기의 홈 화면과
+    <h2><span data-lang="ko">서비스 소개</span><span data-lang="en" hidden>About</span></h2>
+    <p data-lang="ko">이용자는 앱에서 작품을 둘러보고 구매한 뒤, 앱 안의 적용 기능으로 기기의 홈 화면과
       잠금 화면에 바로 설정합니다. 적용과 동시에 기기 갤러리에도 저장되며, 표시되는 말씀의
       언어는 이용자가 적용 시점에 15개 언어 중에서 직접 고릅니다.</p>
-    <p>작가는 작품을 등록해 판매하고, 판매 대금은 회사가 정산합니다. 결제는 전액 Apple
+    <p data-lang="en" hidden>After browsing and buying a piece in the app, users apply it directly
+      to their device's home and lock screen using the in-app apply feature. The piece is saved
+      to the device's photo gallery at the same time it's applied, and users pick which of the
+      15 supported languages the verse text is shown in at the moment they apply it.</p>
+    <p data-lang="ko">작가는 작품을 등록해 판매하고, 판매 대금은 회사가 정산합니다. 결제는 전액 Apple
       App Store와 Google Play의 인앱 결제로 이루어집니다.</p>
+    <p data-lang="en" hidden>Artists list their work for sale, and the company handles seller
+      payouts. All payments are processed entirely through Apple App Store and Google Play
+      in-app purchases.</p>
   </section>
 
   <section id="biz">
-    <h2>사업자 정보</h2>
+    <h2><span data-lang="ko">사업자 정보</span><span data-lang="en" hidden>Business Information</span></h2>
     <div class="card">
       <dl class="biz ui">
-        <div><dt>서비스명</dt><dd>아틀리에316 (threeonesix)</dd></div>
-        <div><dt>상호</dt><dd>루아흐</dd></div>
-        <div><dt>대표자</dt><dd>노영택</dd></div>
-        <div><dt>사업자등록번호</dt><dd>271-25-02355</dd></div>
-        <div><dt>사업장 소재지</dt><dd>경기도 성남시 중원구 산성대로552번길 7-4, 402호</dd></div>
-        <div><dt>업태</dt><dd><ul>
-          <li>정보통신업</li>
-          <li>도매 및 소매업</li>
-          <li>전문, 과학 및 기술서비스업</li>
-        </ul></dd></div>
-        <div><dt>종목</dt><dd><ul>
-          <li>응용 소프트웨어 개발 및 공급업</li>
-          <li>전자상거래 소매 중개업</li>
-          <li>광고물 문안, 도안, 설계 등 작성업</li>
-        </ul></dd></div>
-        <div><dt>통신판매업신고</dt><dd class="status"><b>미신고</b><br>결제대행사 계약 체결 후 신고 예정입니다.</dd></div>
-        <div><dt>전화번호</dt><dd><a href="tel:+821077574823">010-7757-4823</a></dd></div>
-        <div><dt>고객센터</dt><dd><a href="mailto:yt873588@gmail.com">yt873588@gmail.com</a></dd></div>
+        <div><dt><span data-lang="ko">서비스명</span><span data-lang="en" hidden>Service name</span></dt><dd>아틀리에316 (threeonesix)</dd></div>
+        <div><dt><span data-lang="ko">상호</span><span data-lang="en" hidden>Company name</span></dt><dd>루아흐 (Ruach)</dd></div>
+        <div><dt><span data-lang="ko">대표자</span><span data-lang="en" hidden>Representative</span></dt><dd>노영택 (Noh Yeongtaek)</dd></div>
+        <div><dt><span data-lang="ko">사업자등록번호</span><span data-lang="en" hidden>Business registration no.</span></dt><dd>271-25-02355</dd></div>
+        <div><dt><span data-lang="ko">사업장 소재지</span><span data-lang="en" hidden>Address</span></dt><dd>
+          <span data-lang="ko">경기도 성남시 중원구 산성대로552번길 7-4, 402호</span>
+          <span data-lang="en" hidden>경기도 성남시 중원구 산성대로552번길 7-4, 402호<br><span class="small">(7-4 Sanseong-daero 552beon-gil, Jungwon-gu, Seongnam-si, Gyeonggi-do, South Korea)</span></span>
+        </dd></div>
+        <div><dt><span data-lang="ko">업태</span><span data-lang="en" hidden>Business type</span></dt><dd>
+          <ul data-lang="ko">
+            <li>정보통신업</li>
+            <li>도매 및 소매업</li>
+            <li>전문, 과학 및 기술서비스업</li>
+          </ul>
+          <ul data-lang="en" hidden>
+            <li>Information and communications</li>
+            <li>Wholesale and retail trade</li>
+            <li>Professional, scientific and technical services</li>
+          </ul>
+        </dd></div>
+        <div><dt><span data-lang="ko">종목</span><span data-lang="en" hidden>Business items</span></dt><dd>
+          <ul data-lang="ko">
+            <li>응용 소프트웨어 개발 및 공급업</li>
+            <li>전자상거래 소매 중개업</li>
+            <li>광고물 문안, 도안, 설계 등 작성업</li>
+          </ul>
+          <ul data-lang="en" hidden>
+            <li>Application software development and supply</li>
+            <li>E-commerce retail brokerage</li>
+            <li>Advertising copywriting, design and planning services</li>
+          </ul>
+        </dd></div>
+        <div><dt><span data-lang="ko">통신판매업신고</span><span data-lang="en" hidden>Mail-order sales registration</span></dt><dd class="status">
+          <span data-lang="ko"><b>미신고</b><br>결제대행사 계약 체결 후 신고 예정입니다.</span>
+          <span data-lang="en" hidden><b>Not yet registered</b><br>To be registered upon execution of a payment gateway (PG) contract.</span>
+        </dd></div>
+        <div><dt><span data-lang="ko">전화번호</span><span data-lang="en" hidden>Phone</span></dt><dd><a href="tel:+821077574823">010-7757-4823</a></dd></div>
+        <div><dt><span data-lang="ko">고객센터</span><span data-lang="en" hidden>Customer support</span></dt><dd><a href="mailto:yt873588@gmail.com">yt873588@gmail.com</a></dd></div>
       </dl>
     </div>
   </section>
 
   <section id="terms">
-    <h2>이용약관</h2>
+    <h2><span data-lang="ko">이용약관</span><span data-lang="en" hidden>Terms of Service</span></h2>
 
-    <h3>제1조 (목적)</h3>
-    <p>이 약관은 루아흐(이하 "회사")가 운영하는 아틀리에316(이하 "서비스")의 이용 조건과
+    <h3><span data-lang="ko">제1조 (목적)</span><span data-lang="en" hidden>Article 1 (Purpose)</span></h3>
+    <p data-lang="ko">이 약관은 루아흐(이하 "회사")가 운영하는 아틀리에316(이하 "서비스")의 이용 조건과
       회사와 이용자의 권리·의무를 정합니다.</p>
+    <p data-lang="en" hidden>These Terms set out the conditions of use for Atelier316 (the
+      "Service") operated by Ruach (the "Company"), and the rights and obligations of the
+      Company and users.</p>
 
-    <h3>제2조 (서비스 내용)</h3>
-    <p>회사는 성경 말씀이 담긴 모바일 배경화면(이하 "콘텐츠")을 작가로부터 등록받아
+    <h3><span data-lang="ko">제2조 (서비스 내용)</span><span data-lang="en" hidden>Article 2 (Description of Service)</span></h3>
+    <p data-lang="ko">회사는 성경 말씀이 담긴 모바일 배경화면(이하 "콘텐츠")을 작가로부터 등록받아
       판매하고, 구매자가 앱 안에서 기기의 홈·잠금 화면에 직접 적용할 수 있도록 중개합니다.
       원본 콘텐츠를 내려받는 별도의 다운로드 절차는 없으며, 앱 내 적용 기능을 통해서만
       제공됩니다.</p>
+    <p data-lang="en" hidden>The Company receives mobile wallpapers featuring Bible verses
+      (the "Content") registered by artists and sells them, and enables buyers to apply the
+      Content directly to their device's home and lock screen within the app. There is no
+      separate procedure for downloading the original Content — it is provided solely through
+      the in-app apply feature.</p>
 
-    <h3>제3조 (결제)</h3>
-    <p>모든 유료 콘텐츠와 멤버십 결제는 Apple App Store 또는 Google Play의 인앱 결제(IAP)로
+    <h3><span data-lang="ko">제3조 (결제)</span><span data-lang="en" hidden>Article 3 (Payment)</span></h3>
+    <p data-lang="ko">모든 유료 콘텐츠와 멤버십 결제는 Apple App Store 또는 Google Play의 인앱 결제(IAP)로
       처리되며, 회사는 신용카드 정보 등 결제 수단을 직접 수집하지 않습니다. 가격은 스토어가
       제공하는 정액 구간(1,000원 · 2,000원 · 3,000원 · 4,000원 · 5,000원) 중에서만 책정됩니다.</p>
+    <p data-lang="en" hidden>All paid Content and membership payments are processed through
+      in-app purchases (IAP) on the Apple App Store or Google Play, and the Company does not
+      directly collect payment information such as credit card details. Prices are set only
+      within the fixed tiers offered by the stores (KRW 1,000 · 2,000 · 3,000 · 4,000 · 5,000).</p>
 
-    <h3>제4조 (콘텐츠 이용 권한과 저작권)</h3>
-    <p>구매한 콘텐츠는 구매자 본인의 개인적 용도로만 사용할 수 있습니다. 적용·저장되는
+    <h3><span data-lang="ko">제4조 (콘텐츠 이용 권한과 저작권)</span><span data-lang="en" hidden>Article 4 (Content License and Copyright)</span></h3>
+    <p data-lang="ko">구매한 콘텐츠는 구매자 본인의 개인적 용도로만 사용할 수 있습니다. 적용·저장되는
       파일에는 판매자명과 구매자를 식별할 수 있는 정보가 함께 표시되며, 이를 무단으로
       복제·배포하는 경우 저작권 침해로서 관련 법령에 따라 책임을 질 수 있습니다. 콘텐츠에
       대한 저작권은 이를 등록한 작가에게 있습니다.</p>
+    <p data-lang="en" hidden>Purchased Content may be used only for the buyer's own personal
+      purposes. The applied and saved file displays information identifying the seller and
+      the buyer, and unauthorized reproduction or distribution may constitute copyright
+      infringement subject to liability under applicable law. Copyright in the Content belongs
+      to the artist who registered it.</p>
 
-    <h3>제5조 (환불)</h3>
-    <p>환불에 관한 사항은 이 문서의 <a href="#refund">환불정책</a>을 따릅니다.</p>
+    <h3><span data-lang="ko">제5조 (환불)</span><span data-lang="en" hidden>Article 5 (Refunds)</span></h3>
+    <p data-lang="ko">환불에 관한 사항은 이 문서의 <a href="#refund">환불정책</a>을 따릅니다.</p>
+    <p data-lang="en" hidden>Refunds are governed by the <a href="#refund">Refund Policy</a> in
+      this document.</p>
 
-    <h3>제6조 (서비스의 변경·중단)</h3>
-    <p>회사는 운영상·기술상 필요에 따라 서비스의 전부 또는 일부를 변경하거나 중단할 수
+    <h3><span data-lang="ko">제6조 (서비스의 변경·중단)</span><span data-lang="en" hidden>Article 6 (Changes to or Suspension of Service)</span></h3>
+    <p data-lang="ko">회사는 운영상·기술상 필요에 따라 서비스의 전부 또는 일부를 변경하거나 중단할 수
       있으며, 중요한 변경 사항은 서비스 내 공지 또는 이 페이지를 통해 안내합니다.</p>
+    <p data-lang="en" hidden>The Company may change or suspend all or part of the Service for
+      operational or technical reasons, and will announce material changes through in-service
+      notices or this page.</p>
 
-    <h3>제7조 (면책)</h3>
-    <p>회사는 천재지변, 스토어(Apple·Google)의 정책 변경 등 회사가 통제할 수 없는 사유로
+    <h3><span data-lang="ko">제7조 (면책)</span><span data-lang="en" hidden>Article 7 (Disclaimer)</span></h3>
+    <p data-lang="ko">회사는 천재지변, 스토어(Apple·Google)의 정책 변경 등 회사가 통제할 수 없는 사유로
       발생한 서비스 장애에 대해 책임을 지지 않습니다.</p>
+    <p data-lang="en" hidden>The Company is not liable for service disruptions arising from
+      force majeure, changes in store (Apple/Google) policy, or other causes beyond the
+      Company's control.</p>
 
-    <p class="small">최종 개정일: 2026년 9월 2일</p>
+    <p class="small" data-lang="ko">최종 개정일: 2026년 9월 2일</p>
+    <p class="small" data-lang="en" hidden>Last updated: September 2, 2026</p>
   </section>
 
   <section id="privacy">
-    <h2>개인정보처리방침</h2>
-    <p>루아흐(이하 "회사")는 아틀리에316(threeonesix) 서비스와 관련하여 이용자의 개인정보를
+    <h2><span data-lang="ko">개인정보처리방침</span><span data-lang="en" hidden>Privacy Policy</span></h2>
+    <p data-lang="ko">루아흐(이하 "회사")는 아틀리에316(threeonesix) 서비스와 관련하여 이용자의 개인정보를
       다음과 같이 수집·이용합니다.</p>
+    <p data-lang="en" hidden>Ruach (the "Company") collects and uses users' personal information
+      in connection with the Atelier316 (threeonesix) service as follows.</p>
 
-    <h3>수집하는 개인정보 항목</h3>
-    <ul>
+    <h3><span data-lang="ko">수집하는 개인정보 항목</span><span data-lang="en" hidden>Personal Information Collected</span></h3>
+    <ul data-lang="ko">
       <li>이메일 주소, 닉네임 (계정 생성·로그인)</li>
       <li>구매·판매 내역, 결제 식별 정보 (스토어가 제공하는 거래 ID)</li>
       <li>정산 계좌 정보: 은행 계좌, PayPal, Payoneer 중 판매자가 선택한 방식 (판매자만 해당)</li>
       <li>본인 확인 시: 이름, 생년월일, 성별, 암호화된 이용자 확인값(CI) (국내 계좌로 정산받는 판매자의 본인인증 시에만 해당)</li>
       <li>기기 정보, 앱 이용 로그 (오류 진단, 서비스 개선)</li>
     </ul>
+    <ul data-lang="en" hidden>
+      <li>Email address, nickname (account creation and login)</li>
+      <li>Purchase/sale history, payment identification information (transaction IDs provided by the store)</li>
+      <li>Payout account information: bank account, PayPal, or Payoneer, as selected by the seller (sellers only)</li>
+      <li>For identity verification: name, date of birth, gender, encrypted Connecting Information (CI) (only for sellers verifying identity to be paid to a domestic Korean bank account)</li>
+      <li>Device information, app usage logs (error diagnosis, service improvement)</li>
+    </ul>
 
-    <h3>수집 목적</h3>
-    <ul>
+    <h3><span data-lang="ko">수집 목적</span><span data-lang="en" hidden>Purpose of Collection</span></h3>
+    <ul data-lang="ko">
       <li>회원 가입 및 계정 관리, 본인 확인</li>
       <li>콘텐츠 구매·판매 처리 및 정산</li>
       <li>부정 이용 방지, 신고·차단 처리</li>
       <li>서비스 개선 및 고객 문의 응대</li>
     </ul>
+    <ul data-lang="en" hidden>
+      <li>Membership registration and account management, identity verification</li>
+      <li>Processing content purchases/sales and seller payouts</li>
+      <li>Fraud prevention, handling reports and blocks</li>
+      <li>Service improvement and responding to customer inquiries</li>
+    </ul>
 
-    <h3>보유 및 이용 기간</h3>
-    <p>회원 탈퇴 시까지 보유하며, 탈퇴 후에는 지체 없이 파기합니다. 다만 관계 법령에 따라
+    <h3><span data-lang="ko">보유 및 이용 기간</span><span data-lang="en" hidden>Retention Period</span></h3>
+    <p data-lang="ko">회원 탈퇴 시까지 보유하며, 탈퇴 후에는 지체 없이 파기합니다. 다만 관계 법령에 따라
       보존이 필요한 거래·결제 기록은 해당 법령이 정한 기간 동안 보관합니다.</p>
+    <p data-lang="en" hidden>Information is retained until account withdrawal and is destroyed
+      without delay thereafter. However, transaction and payment records that must be retained
+      under applicable law are kept for the period required by such law.</p>
 
-    <h3>제3자 제공 및 처리 위탁</h3>
-    <p>결제는 Apple·Google이 각 스토어 정책에 따라 직접 처리하며, 서비스 인프라(데이터베이스,
+    <h3><span data-lang="ko">제3자 제공 및 처리 위탁</span><span data-lang="en" hidden>Third-Party Provision and Outsourcing</span></h3>
+    <p data-lang="ko">결제는 Apple·Google이 각 스토어 정책에 따라 직접 처리하며, 서비스 인프라(데이터베이스,
       인증, 파일 저장)는 Supabase를 통해 운영됩니다. 회사는 위 목적 외에 개인정보를
       제3자에게 제공하지 않습니다.</p>
+    <p data-lang="en" hidden>Payments are processed directly by Apple and Google under each
+      store's own policies, and the Service's infrastructure (database, authentication, file
+      storage) runs on Supabase. The Company does not provide personal information to third
+      parties beyond the purposes stated above.</p>
 
-    <h3>이용자의 권리</h3>
-    <p>이용자는 언제든지 본인의 개인정보 열람·정정·삭제를 요청할 수 있으며, 아래
+    <h3><span data-lang="ko">이용자의 권리</span><span data-lang="en" hidden>User Rights</span></h3>
+    <p data-lang="ko">이용자는 언제든지 본인의 개인정보 열람·정정·삭제를 요청할 수 있으며, 아래
       <a href="#contact">문의처</a>로 연락하면 지체 없이 조치합니다.</p>
+    <p data-lang="en" hidden>Users may request access to, correction of, or deletion of their
+      personal information at any time by contacting us at the <a href="#contact">contact</a>
+      below; we will act without delay.</p>
 
-    <p class="small">최종 개정일: 2026년 9월 2일</p>
+    <p class="small" data-lang="ko">최종 개정일: 2026년 9월 2일</p>
+    <p class="small" data-lang="en" hidden>Last updated: September 2, 2026</p>
   </section>
 
   <section id="refund">
-    <h2>환불정책</h2>
+    <h2><span data-lang="ko">환불정책</span><span data-lang="en" hidden>Refund Policy</span></h2>
 
-    <div class="note">
+    <div class="note" data-lang="ko">
       <strong>구조적으로 알아두어야 할 점</strong>
       배경화면은 결제 즉시 앱 안에서 기기의 홈·잠금 화면에 적용되며, 이와 동시에 기기
       갤러리에도 저장됩니다. 따라서 적용을 완료한 이후에는 이미 저장된 파일 자체를
       회수할 수 없습니다.
     </div>
+    <div class="note" data-lang="en" hidden>
+      <strong>A structural point to understand</strong>
+      A wallpaper is applied to your device's home and lock screen within the app immediately
+      upon payment, and is saved to your device's gallery at the same time. Once applied, the
+      saved file itself can no longer be retrieved.
+    </div>
 
-    <h3>적용(다운로드) 전</h3>
-    <p>콘텐츠를 아직 적용하지 않은 상태라면, 결제일로부터 Apple 또는 Google의 환불 정책이
+    <h3><span data-lang="ko">적용(다운로드) 전</span><span data-lang="en" hidden>Before Applying (Downloading)</span></h3>
+    <p data-lang="ko">콘텐츠를 아직 적용하지 않은 상태라면, 결제일로부터 Apple 또는 Google의 환불 정책이
       정한 기간 안에 각 스토어를 통해 환불을 요청할 수 있습니다. 환불 처리는 스토어가
       직접 심사·승인하며, 회사가 임의로 환불을 결정하거나 대신 처리할 수 없습니다.</p>
+    <p data-lang="en" hidden>If you have not yet applied the Content, you may request a refund
+      through the respective store within the period set by Apple's or Google's refund policy
+      from the date of payment. Refunds are reviewed and approved directly by the store — the
+      Company cannot decide or process refunds on its own.</p>
 
-    <h3>적용(다운로드) 후</h3>
-    <p>콘텐츠를 이미 적용·저장했다면 콘텐츠를 사용한 것으로 간주되어 환불이 제한될 수
+    <h3><span data-lang="ko">적용(다운로드) 후</span><span data-lang="en" hidden>After Applying (Downloading)</span></h3>
+    <p data-lang="ko">콘텐츠를 이미 적용·저장했다면 콘텐츠를 사용한 것으로 간주되어 환불이 제한될 수
       있습니다. 저장된 파일에는 구매자를 식별할 수 있는 정보가 포함되어 있어, 무단
       유포가 확인되는 경우에도 환불이 제한됩니다.</p>
+    <p data-lang="en" hidden>Once Content has been applied and saved, it is considered used and
+      a refund may be restricted. The saved file contains information identifying the buyer, so
+      refunds may also be restricted where unauthorized distribution is confirmed.</p>
 
-    <h3>무제한 다운로드 멤버십</h3>
-    <p>평생 1회 결제 상품으로, 가입 후 한 번이라도 광고 없이 무료 콘텐츠를 다운로드하면
+    <h3><span data-lang="ko">무제한 다운로드 멤버십</span><span data-lang="en" hidden>Unlimited Download Membership</span></h3>
+    <p data-lang="ko">평생 1회 결제 상품으로, 가입 후 한 번이라도 광고 없이 무료 콘텐츠를 다운로드하면
       이용한 것으로 간주되어 환불이 제한될 수 있습니다.</p>
+    <p data-lang="en" hidden>This is a one-time, lifetime purchase. Once you download any free
+      Content without watching an ad after subscribing, it is considered used and a refund may
+      be restricted.</p>
 
-    <h3>환불 요청 방법</h3>
-    <ul>
+    <h3><span data-lang="ko">환불 요청 방법</span><span data-lang="en" hidden>How to Request a Refund</span></h3>
+    <ul data-lang="ko">
       <li><strong>iOS</strong>: <a href="https://support.apple.com/ko-kr/118223" target="_blank" rel="noopener">Apple 환불 요청 안내</a> 또는 Apple 지원팀</li>
       <li><strong>Android</strong>: Google Play 스토어 &gt; 주문내역 &gt; 환불 요청</li>
     </ul>
-    <p>스토어를 통해 환불이 확정되면 회사 서버에도 자동으로 반영되어, 해당 콘텐츠의
+    <ul data-lang="en" hidden>
+      <li><strong>iOS</strong>: <a href="https://support.apple.com/en-us/118223" target="_blank" rel="noopener">Apple's refund request guide</a> or Apple Support</li>
+      <li><strong>Android</strong>: Google Play Store &gt; Order History &gt; Request a refund</li>
+    </ul>
+    <p data-lang="ko">스토어를 통해 환불이 확정되면 회사 서버에도 자동으로 반영되어, 해당 콘텐츠의
       소장 상태와 정산 대상에서 제외됩니다.</p>
+    <p data-lang="en" hidden>Once a refund is confirmed by the store, it is automatically
+      reflected on our servers, removing the Content from the buyer's library and excluding it
+      from seller payouts.</p>
 
-    <p class="small">최종 개정일: 2026년 9월 2일</p>
+    <p class="small" data-lang="ko">최종 개정일: 2026년 9월 2일</p>
+    <p class="small" data-lang="en" hidden>Last updated: September 2, 2026</p>
   </section>
 
   <section id="contact">
-    <h2>문의</h2>
-    <p>서비스 이용, 결제·환불, 개인정보 관련 문의는 아래 이메일로 연락해 주세요. 영업일
+    <h2><span data-lang="ko">문의</span><span data-lang="en" hidden>Contact</span></h2>
+    <p data-lang="ko">서비스 이용, 결제·환불, 개인정보 관련 문의는 아래 이메일로 연락해 주세요. 영업일
       기준 빠르게 답변드립니다.</p>
+    <p data-lang="en" hidden>For questions about using the Service, payments/refunds, or
+      personal information, please contact us at the email below. We respond promptly on
+      business days.</p>
     <p><a href="mailto:yt873588@gmail.com">yt873588@gmail.com</a> · <a href="tel:+821077574823">010-7757-4823</a></p>
   </section>
 </main>
@@ -416,11 +552,58 @@
     <span class="brand-name">아틀리에316</span>
   </span>
   <div class="rows">
-    <div>루아흐 · 대표 노영택</div>
-    <div>사업자등록번호 271-25-02355</div>
-    <div>경기도 성남시 중원구 산성대로552번길 7-4, 402호</div>
+    <div data-lang="ko">루아흐 · 대표 노영택</div>
+    <div data-lang="en" hidden>Ruach · CEO Noh Yeongtaek</div>
+    <div data-lang="ko">사업자등록번호 271-25-02355</div>
+    <div data-lang="en" hidden>Business Registration No. 271-25-02355</div>
+    <div data-lang="ko">경기도 성남시 중원구 산성대로552번길 7-4, 402호</div>
+    <div data-lang="en" hidden>경기도 성남시 중원구 산성대로552번길 7-4, 402호 (7-4 Sanseong-daero 552beon-gil, Jungwon-gu, Seongnam-si, Gyeonggi-do, South Korea)</div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'atelier316_lang';
+  var TITLE = {
+    ko: '아틀리에316 서비스 정보',
+    en: 'Atelier316 Service Information'
+  };
+  var DESC = {
+    ko: '아틀리에316(threeonesix) 사업자 정보, 이용약관, 개인정보처리방침, 환불정책 및 고객 문의처.',
+    en: 'Atelier316 (threeonesix) business information, terms of service, privacy policy, refund policy, and contact.'
+  };
+  var descEl = document.querySelector('meta[name="description"]');
+  var buttons = document.querySelectorAll('.langsw button');
+
+  function apply(lang) {
+    document.documentElement.lang = lang;
+    document.title = TITLE[lang];
+    if (descEl) descEl.setAttribute('content', DESC[lang]);
+    document.querySelectorAll('[data-lang]').forEach(function (el) {
+      el.hidden = el.getAttribute('data-lang') !== lang;
+    });
+    buttons.forEach(function (btn) {
+      btn.setAttribute('aria-pressed', btn.dataset.setLang === lang ? 'true' : 'false');
+    });
+  }
+
+  function setLang(lang) {
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+    apply(lang);
+  }
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () { setLang(btn.dataset.setLang); });
+  });
+
+  var saved = null;
+  try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  // ponytail: 저장된 선택이 없으면 브라우저 언어로 첫 화면만 추정 — 15개 언어를
+  // 다 매핑하지 않고 한국어/그 외 이분법만 씀 (이 페이지는 한/영 2개뿐이라 충분).
+  var guessed = (navigator.language || '').toLowerCase().indexOf('ko') === 0 ? 'ko' : 'en';
+  apply(saved || guessed);
+})();
+</script>
 
 </body>
 </html>
